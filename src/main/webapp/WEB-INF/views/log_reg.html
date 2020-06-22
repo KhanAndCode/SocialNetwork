@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script th:src="@{/resources/global.js}"></script>
+
+</head>
+<body>
+<div th:replace="../views/header :: header"></div>
+<div class="container">
+    <div class="row justify-content-end">
+        <div class="col">
+            <ul>
+                <li><a href="?lang=en">en</a></li>
+                <li><a href="?lang=ru">ru</a></li>
+            </ul>
+
+        </div>
+        <div class="col-5">
+            <form class="text-center border border-light p-4" method="post" th:action="@{/login}">
+
+                <!-- Email -->
+                <input type="email" id="defaultLoginFormEmail" class="form-control mb-4" name="custom_username"
+                       placeholder="E-mail"/>
+
+                <!-- Password -->
+                <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" name="custom_password"
+                       placeholder="Password"/>
+
+                <div id="errors_login" class="text-danger"
+                     th:if="${(param.error != null) and (param.error[0] == 'true')}" th:text="#{error.errorLogin}">
+                    Invalid Username or Password.
+                </div>
+                <div id="logout" class="text-info" th:if="${(param.logout != null) and (param.logout[0] == 'true')}"
+                     th:text="#{info.logout}">
+                    You have successfully been logged out.
+                </div>
+                <!-- Sign in button -->
+                <button class="btn btn-info btn-block my-4" type="submit" th:text="#{button.signIn}">Sign in</button>
+
+
+            </form>
+            <form class="text-center border border-light p-4" th:action="@{/registration}" method="post"
+                  th:object="${user}">
+
+                <p class="h4 mb-4" th:text="#{button.signUp}">Sign up</p>
+
+                <div class="form-row mb-4">
+                    <div class="col">
+                        <!-- First name -->
+                        <input type="text" id="defaultRegisterFormFirstName" class="form-control"
+                               th:field="*{name}" placeholder="First name"/>
+                        <span th:if="${#fields.hasErrors('name')}">
+            <p th:each="err:${#fields.errors('name')}" th:text="#{${err}}"
+               class="text-danger"></p>
+                             </span>
+                    </div>
+                    <div class="col">
+                        <!-- Last name -->
+                        <input type="text" id="defaultRegisterFormLastName" class="form-control"
+                               th:field="*{subname}" placeholder="Last name"/>
+                        <span th:if="${#fields.hasErrors('subname')}">
+            <p th:each="err:${#fields.errors('subname')}" th:text="#{${err}}"
+               class="text-danger"></p> </span>
+                    </div>
+                </div>
+                <!-- E-mail -->
+                <input type="email" id="defaultRegisterFormEmail" class="form-control mb-4" th:field="*{mail}"
+                       placeholder="E-mail"/>
+                <span th:if="${#fields.hasErrors('mail')}">
+            <p th:each="err:${#fields.errors('mail')}" th:text="#{${err}}"
+               class="text-danger"></p>
+                </span>
+                <!-- Password -->
+                <input type="password" id="defaultRegisterFormPassword" class="form-control" placeholder="Password"
+                       aria-describedby="defaultRegisterFormPasswordHelpBlock" th:field="*{password}"/>
+                <span th:if="${#fields.hasErrors('password')}">
+            <p th:each="err:${#fields.errors('password')}" th:text="#{${err}}"
+               class="text-danger"></p>
+            </span>
+                <!--                <small id="defaultRegisterFormPasswordHelpBlock" class="form-text text-muted mb-4">-->
+                <!--                    At least 8 characters and 1 digit-->
+                <!--                </small>-->
+
+                <!-- Sign up button -->
+                <button class="btn btn-info my-4 btn-block" th:text="#{button.signUp}" type="submit">Sign up</button>
+
+
+                <!-- Terms of service -->
+                <p th:text="#{label.byClicking}">By clicking you agree to our
+                    terms of service</a></p>
+
+            </form>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>

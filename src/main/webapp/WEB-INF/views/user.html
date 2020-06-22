@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script th:src="@{/resources/global.js}"></script>
+<!--    <script th:src="@{/resources/loader.js}"></script>-->
+</head>
+<body class="bg-light">
+<div th:replace="../views/header :: header"></div>
+<div class="container">
+    <div class="contaier-fluid">
+        <div class="row justify-content-center mb-3">
+            <div th:replace="../views/main::menu-div"></div>
+            <div class="col-6">
+                <div class="card bg-warning mb-3" style="max-width: 100%;">
+                    <div class="card-header"><p
+                                                th:text="${user.name +' '+user.subname}"></p></div>
+                    <div class="card-body">
+                        <p th:text="${'Following: '+ user.following.size()}"></p>
+                        <p th:text="${'Followers: '+ user.followers.size()}"></p>
+                        <p th:if="${user.userInfo.country!=null}" th:text="${'Country: '+ user.userInfo.country}"></p>
+                        <p th:if="${user.userInfo.city!=null}" th:text="${'City: '+  user.userInfo.city}"></p>
+                    </div>
+                </div>
+                <div class="card bg-light mb-3" style="max-width: 100%;" th:each="record:${userRecords}">
+                    <div class="card-header"><p
+                            th:text="${user.name +' '+user.subname}"></p></div>
+                    <div class="card-body">
+                        <p th:text="${record.getRecord()}"> Some text</p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col">
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Default form login -->
+</div>
+</body>
+</html>
